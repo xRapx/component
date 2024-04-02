@@ -1,0 +1,31 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+
+	<h1>Login Success</h1>
+	<p>You are now logged in.</p>
+	<div id="data"></div>
+	
+	<script>
+		const token = localStorage.getItem('userToken');
+
+		axios.get('https://your-api-url.com/user', {
+		headers: {
+			Authorization: `Bearer ${token}`
+		}
+		})
+		.then(function (response) {
+		console.log(response);
+		document.getElementById('data').innerHTML = response
+		})
+		.catch(function (error) {
+		console.error(error);
+		});
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+	<h1>Test App</h1>
+	<div>
+		<form id="registerForm">
+			<input type="text" id="name" placeholder="Your name">
+			<input type="email" id="email" placeholder="Your email">
+			<input type="password" id="password" placeholder="Your password">
+			<button type="submit">Register</button>
+		  </form>
+	</div>
+	<script>
+		const form = document.getElementById('registerForm');
+
+			form.addEventListener('submit', function (e) {
+			e.preventDefault();
+
+			const name = document.getElementById('name').value;
+			const email = document.getElementById('email').value;
+			const password = document.getElementById('password').value;
+
+			const data = {
+				name: name,
+				email: email,
+				password: password
+			};
+
+			axios.post('http://localhost:8200/v1/api/shop/signup', data, {
+				headers: {
+					'x-api-key': '9b4fbfc2da060caaac891a43a9774e3d8ed62a2c6803bb0507bdceb15e351637efc14746faf837c892276ce062b696a494e55c3c90228c84cdafb56c0309bf6b',
+  				}
+			})
+			.then(function (response) {
+				console.log(response);
+				// Luu tr? token trong localStorage
+				localStorage.setItem('userToken', response.data.metadata.metadata.tokens.accessToken);
+				alert('Registration successful!');
+			})
+			.catch(function (error) {
+				console.error(error);
+				alert('Registration failed!');
+			});
+		})	
+	</script>
+
+</body>
+</html>
